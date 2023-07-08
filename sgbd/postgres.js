@@ -10,8 +10,4 @@ const db = new Client({
 });
 
 db.connect();
-
-/* const query = "SELECT * FROM categories";
- */
-
 export { db };

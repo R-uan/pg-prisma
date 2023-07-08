@@ -43,19 +43,18 @@ async function postOne(req, res) {
 }
 
 async function getOneUsername(req, res) {
-    const text = "SELECT * FROM contacts WHERE username = $1";
-    const query = await db.query(text, [req.params.id], (error, result) => {
-        if (error) {
-            console.log(error.message);
-            return res.status(400).json({ err: error.message });
-        }
+    try {
+        const text = "SELECT * FROM contacts WHERE username = $1";
+        const query = await db.query(text, [req.params.id]);
 
         if (result.rowCount === 0) {
             return res.status(404).send("Username was not found");
         }
 
-        res.send(result.rows);
-    });
+        res.status(200).json({ status: "success", result: result.rows });
+    } catch (error) {
+        console.log(error.message);
+    }
 }
 
 async function updateByEmail(req, res) {
@@ -111,17 +110,16 @@ async function updateByEmail(req, res) {
 }
 
 async function deleteByEmail(req, res) {
-    const text = "DELETE FROM contacts WHERE email = $1";
-    const query = await db.query(text, [req.params.id], (error, result) => {
-        if (error) {
-            console.log(error);
-            return res.status(400).json({ err: error.message });
-        }
+    try {
+        const text = "DELETE FROM contacts WHERE email = $1";
+        const query = await db.query(text, [req.params.id]);
         if (result.rowCount === 0) {
             return res.status(404).send("Email not found");
         }
-        res.status(200).json({ status: "Sucess", result: result.rows });
-    });
+        res.status(200).json({ status: "success", result: query.rows });
+    } catch (error) {
+        console.log(error.message);
+    }
 }
 
 export { getAll, postOne, getOneUsername, deleteByEmail, updateByEmail };
