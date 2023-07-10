@@ -47,11 +47,11 @@ async function getOneUsername(req, res) {
         const text = "SELECT * FROM contacts WHERE username = $1";
         const query = await db.query(text, [req.params.id]);
 
-        if (result.rowCount === 0) {
+        if (query.rowCount === 0) {
             return res.status(404).send("Username was not found");
         }
 
-        res.status(200).json({ status: "success", result: result.rows });
+        res.status(200).json({ data: query.rows });
     } catch (error) {
         console.log(error.message);
     }
@@ -113,10 +113,10 @@ async function deleteByEmail(req, res) {
     try {
         const text = "DELETE FROM contacts WHERE email = $1";
         const query = await db.query(text, [req.params.id]);
-        if (result.rowCount === 0) {
+        if (query.rowCount === 0) {
             return res.status(404).send("Email not found");
         }
-        res.status(200).json({ status: "success", result: query.rows });
+        res.status(200).json({ data: query.rows });
     } catch (error) {
         console.log(error.message);
     }
