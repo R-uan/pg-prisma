@@ -1,5 +1,5 @@
 # Contacts API
 
-Simple API to register personal contacts using Postgres as the main database and pg for the database manipulation.
+.old contains old version that uses pg instead of prisma.
 
-**Back-end:** Node, Express, pg
+**Back-end:** Node, Express, Prisma, Typescript
